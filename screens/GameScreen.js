@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { View, Text, Button, StyleSheet, ImageBackground, TouchableWithoutFeedback, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, ImageBackground, TouchableWithoutFeedback, TouchableOpacity } from "react-native";
 import { GameEngine } from "react-native-game-engine";
 import Physics from "../components/physics";
 import Bird from "../components/Bird";
@@ -61,22 +61,30 @@ export default function GameScreen({ navigation }) {
         <View style={styles.gameOverContainer}>
           <Text style={styles.gameOverText}>Game Over</Text>
           <Text style={styles.scoreText}>Score: {score}</Text>
-          <Button
-            title="Restart"
+          <TouchableOpacity
+            style={styles.button}
             onPress={() => {
               setGameOver(false);
               setScore(0);
               setRunning(true);
             }}
-          />
-          <Button title="Back to Home" onPress={handleHome} />
+          >
+            <Text style={styles.buttonText}>Restart</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={handleHome}>
+            <Text style={styles.buttonText}>Back to Home</Text>
+          </TouchableOpacity>
         </View>
       ) : paused ? (
         // Paused screen
         <View style={styles.pauseMenu}>
           <Text style={styles.score}>Score: {score}</Text>
-          <Button title="Resume" onPress={handleResume} />
-          <Button title="Back to Home" onPress={handleHome} />
+          <TouchableOpacity style={styles.button} onPress={handleResume}>
+            <Text style={styles.buttonText}>Resume</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={handleHome}>
+            <Text style={styles.buttonText}>Back to Home</Text>
+          </TouchableOpacity>
         </View>
       ) : (
         // Game screen when running
@@ -128,6 +136,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent background
+    borderRadius: 10,
+    padding: 20,
+    margin: 20,
   },
   pauseMenu: {
     justifyContent: "center",
@@ -137,6 +148,7 @@ const styles = StyleSheet.create({
     fontSize: 36,
     color: "white",
     marginBottom: 20,
+    fontWeight: "bold",
   },
   scoreText: {
     fontSize: 24,
@@ -146,6 +158,25 @@ const styles = StyleSheet.create({
   score: {
     fontSize: 24,
     marginBottom: 20,
+    fontWeight: "bold",
+  },
+  button: {
+    backgroundColor: "#4CAF50",
+    borderRadius: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    marginVertical: 10,
+    width: 200,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "600",
   },
   pauseButton: {
     position: "absolute",
